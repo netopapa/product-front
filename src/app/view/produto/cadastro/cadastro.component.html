@@ -1,0 +1,36 @@
+<section id="produto-form">
+  <div class="card blue-gray darken-1">
+    <h3 class=header>Produto <span class="small"> - {{txtHeader}}</span></h3>
+    <div class="divider"></div>
+    <div class="space"></div>
+
+    <div class="card-content">
+      <form #produtoForm="ngForm">
+
+          <div class="row">
+            <div class="col s12">
+              Nome:
+              <div class="input-field inline">
+                  <input type="text" name="nome" [(ngModel)]="produto.name" maxlength="60" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s12">
+              Descrição:
+              <div class="input-field inline">
+                  <input type="text" name="description" [(ngModel)]="produto.description" maxlength="500" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s12 center-align">
+                <button class="waves-effect waves-light btn green" type="submit" [disabled]="!produtoForm.form.valid" (click)="save(produto)">{{txtBtnSubmit}}</button>
+            </div>
+          </div>
+      </form>
+    </div>
+</div>
+</section>

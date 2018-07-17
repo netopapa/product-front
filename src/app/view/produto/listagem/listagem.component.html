@@ -1,0 +1,59 @@
+<section id="perfils">
+  <div class="card blue-gray darken-1">
+      <h3 class=header>Produtos <span class="small"> - painel principal</span></h3>
+      <div class="divider"></div>
+      <div class="space"></div>
+      <div class="row">
+          <div class="col s6">
+              <div class="row">
+                  <div class="input-field col s12">
+                      <input id="filtro" type="text" (keyup)="applyFilter($event.target.value)">
+                      <label for="filtro">Pesquise</label>
+                  </div>
+              </div>
+          </div>
+          <div class="col s6">
+              <a [routerLink]="['/form']" class="waves-effect waves-light btn right"><i class="fa fa-plus"></i> Produto</a>
+          </div>
+      </div>
+
+      <div class="card-content">
+          <mat-table [dataSource]="dataSource" matSort>
+
+              <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Nome </mat-header-cell>
+                  <mat-cell *matCellDef="let produto"> {{produto.name}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </mat-header-cell>
+                <mat-cell *matCellDef="let produto"> {{produto.description}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="dtCreate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Data de criação </mat-header-cell>
+                <mat-cell *matCellDef="let produto"> {{produto.dtCreate | date: 'dd/mm/yyyy'}} </mat-cell>
+            </ng-container>
+            
+              <ng-container matColumnDef="acoes">
+                  <mat-header-cell class="text-right" *matHeaderCellDef>Ações</mat-header-cell>
+                  <mat-cell class="text-right acoes" *matCellDef="let produto">
+                    <a class="btn-floating btn-small waves-effect waves-light green" matTooltip="Editar" matTooltipPosition="left" (click)="editThis(produto.id)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn-floating btn-small waves-effect waves-light red" matTooltip="Deletar" matTooltipPosition="left" (click)="deleteThis(produto.id)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                  </mat-cell>
+              </ng-container>
+            
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let produto; columns: displayedColumns;">
+              </mat-row>
+          </mat-table>
+                
+           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+  </div>
+</section>
+
