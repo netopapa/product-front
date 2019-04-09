@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Product } from '../../../model/product.model';
 import { FeedbackService } from '../../../service/feedback/feedback.service';
 import { ProductService } from '../../../service/product/product.service';
-import { Product } from '../../../model/product.model';
+
 
 @Component({
   selector: 'app-cadastro',
@@ -14,9 +14,9 @@ export class CadastroComponent implements OnInit {
 
   private produto: Product;
 
-    private edit: boolean;
-    private txtBtnSubmit = '';
-    private txtHeader = '';
+  private edit: boolean;
+  private txtBtnSubmit = '';
+  private txtHeader = '';
 
   constructor(
     private service: ProductService,
@@ -34,47 +34,36 @@ export class CadastroComponent implements OnInit {
   welcome() {
     this.route.params.subscribe(
       (params: any) => {
-          if (params['id'] != null) {
-              this.edit = true;
-              this.txtBtnSubmit = 'editar';
-              this.txtHeader = 'Edição';
-              this.getProduct(params['id']);
-            } else {
-              this.edit = false;
-              this.txtBtnSubmit = 'cadastrar';
-              this.txtHeader = 'Cadastro';
-          }
+        if (params['id'] != null) {
+          this.edit = true;
+          this.txtBtnSubmit = 'editar';
+          this.txtHeader = 'Edição';
+          this.getProduct(params['id']);
+        } else {
+          this.edit = false;
+          this.txtBtnSubmit = 'cadastrar';
+          this.txtHeader = 'Cadastro';
+        }
       }
     );
   }
 
   getProduct(id: number): void {
-    this.service.getOne(id.toString()).subscribe(
-      success => {
-        this.produto = success;
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    console.log(id);
+    console.log(this.service.getOne(id));
+    Object.assign(this.produto, this.service.getOne(id));
   }
 
   save(produto: Product): void {
 
     if (this.edit) {
-      this.service.update(produto).subscribe(
-        success => {
-          this.feedback.openSnackBar('Produto editado!');
-          this.router.navigate(['/']);
-        }
-      );
+      this.service.update(produto);
+      this.feedback.openSnackBar('Produto editado!');
+      this.router.navigate(['/']);
     } else {
-      this.service.save(produto).subscribe(
-        success => {
-          this.feedback.openSnackBar('Produto cadastrado!');
-          this.router.navigate(['/']);
-        }
-      );
+      this.service.save(produto);
+      this.feedback.openSnackBar('Produto cadastrado!');
+      this.router.navigate(['/']);
     }
 
   }

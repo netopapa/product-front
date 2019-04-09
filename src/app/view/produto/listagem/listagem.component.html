@@ -32,7 +32,7 @@
             
             <ng-container matColumnDef="dtCreate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Data de criação </mat-header-cell>
-                <mat-cell *matCellDef="let produto"> {{produto.dtCreate | date: 'dd/mm/yyyy'}} </mat-cell>
+                <mat-cell *matCellDef="let produto"> {{produto.dtCreate | date: 'h:mm a'}} </mat-cell>
             </ng-container>
             
               <ng-container matColumnDef="acoes">

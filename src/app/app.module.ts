@@ -1,20 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-
-import { AppComponent } from './app.component';
-import { ListagemComponent } from './view/produto/listagem/listagem.component';
-import { CadastroComponent } from './view/produto/cadastro/cadastro.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { RestService } from './service/rest-service/rest.service';
-import { ProductService } from './service/product/product.service';
-import { FeedbackService } from './service/feedback/feedback.service';
 import { HttpModule } from '@angular/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -42,13 +29,21 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule,
+  MatTooltipModule
 } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
 import { appRoutes } from './app.routing';
+import { FeedbackService } from './service/feedback/feedback.service';
+import { ProductService } from './service/product/product.service';
+import { CadastroComponent } from './view/produto/cadastro/cadastro.component';
+import { ListagemComponent } from './view/produto/listagem/listagem.component';
 
 @NgModule({
   exports: [
@@ -101,14 +96,12 @@ export class MaterialModule { }
     CommonModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
     ),
     FormsModule,
     ReactiveFormsModule,
     MaterialModule
   ],
   providers: [
-    RestService,
     ProductService,
     FeedbackService,
   ],

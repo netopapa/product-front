@@ -1,43 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-
-import { RestService } from '../rest-service/rest.service';
-import { Constant } from '../../constant/constant';
-import { Observable } from 'rxjs/Observable';
 import { Product } from '../../model/product.model';
 
 @Injectable()
-export class ProductService extends RestService {
+export class ProductService {
 
-  baseURL = Constant.BASE_URL + Constant.PRODUTO;
+  public produtos: Product[] = [];
 
-  constructor(
-    http: Http
-  ) { super(http); }
+  constructor() { }
 
-  public getAll(): Observable<Array<Product>> {
-    return this.get(this.baseURL + 'findAll');
+  public getAll(): Product[] {
+    return this.produtos;
   }
 
-  public getOne(id: String): Observable<Product> {
-    const getAllUrl = this.baseURL + 'findOne/' + id;
-    return this.get(getAllUrl);
+  public getOne(id: number): Product {
+    return this.produtos.find(prod => prod.id == id);
   }
 
-  public save(data: Product): Observable<Product> {
-    const saveUrl = this.baseURL + 'save';
-    return this.post(saveUrl, data);
+  public save(data: Product): Product {
+    data.id = this.buildNewId();
+    this.produtos.push(data);
+    return data;
   }
 
-  public update(data: Product): Observable<Product> {
-    const updateUrl = this.baseURL + 'update';
-    return this.put(updateUrl, data);
+  public update(data: Product): Product {
+    const index: number = this.produtos.indexOf(this.getOne(data.id));
+    this.produtos[index] = data;
+    return this.produtos[index];
   }
 
 
-  public delete(id: string): Observable<any> {
-    const deleteURL = this.baseURL + 'delete';
-
-    return this.remove(deleteURL, id);
+  public delete(id: number): void {
+    const index: number = this.produtos.indexOf(this.getOne(id));
+    this.produtos.splice(index, 1);
   }
+
+  private buildNewId(): number {
+    let id = this.produtos.length;
+    while (this.getOne(id)) {
+      id++;
+    }
+    return id;
+  }
+
 }

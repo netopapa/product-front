@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-
-import { FeedbackService } from '../../../service/feedback/feedback.service';
 import { Product } from '../../../model/product.model';
+import { FeedbackService } from '../../../service/feedback/feedback.service';
 import { ProductService } from '../../../service/product/product.service';
+
 
 @Component({
   selector: 'app-listagem',
@@ -41,30 +41,17 @@ export class ListagemComponent implements OnInit, AfterViewInit {
   }
 
   getProdutos(): void {
-    this.service.getAll().subscribe(
-      success => {
-        this.dataSource.data = success;
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.dataSource.data = this.service.getAll();
   }
 
   deleteThis(id: number): void {
-    this.service.delete(id.toString()).subscribe(
-      success => {
-        this.feedback.openSnackBar(success.msg);
-        this.getProdutos();
-      },
-      error => {
-        this.feedback.openSnackBar(error);
-      }
-    );
+    this.service.delete(id);
+    this.feedback.openSnackBar('Produto deletado!');
+    this.getProdutos();
   }
 
-  editThis(id: string): void {
-      this.router.navigate([`/form/${id}`]);
+  editThis(id: number): void {
+    this.router.navigate([`/form/${id}`]);
   }
 
   applyFilter(filterValue: string): void {
