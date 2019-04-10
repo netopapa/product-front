@@ -11,7 +11,7 @@
           <div class="col s12">
             Nome:
             <div class="input-field inline">
-              <input type="text" name="nome" [(ngModel)]="prodName" maxlength="60" required>
+              <input class="namei" type="text" name="nome" [(ngModel)]="prodName" maxlength="60" required>
               <span *ngIf="!checkName()" class="display-error">Já existe um produto cadastrado com o mesmo nome</span>
             </div>
           </div>
@@ -21,7 +21,7 @@
           <div class="col s12">
             Descrição:
             <div class="input-field inline">
-              <input type="text" name="description" [(ngModel)]="produto.description" maxlength="500" required>
+              <input class="desc"type="text" name="description" [(ngModel)]="produto.description" maxlength="500" required>
             </div>
           </div>
         </div>
