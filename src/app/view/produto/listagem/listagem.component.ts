@@ -46,7 +46,7 @@ export class ListagemComponent implements OnInit, AfterViewInit {
 
   deleteThis(id: number): void {
     this.service.delete(id);
-    this.feedback.openSnackBar('Produto deletado!');
+    this.feedback.openSuccessSnackBar('Produto deletado!');
     this.getProdutos();
   }
 

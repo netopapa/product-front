@@ -11,7 +11,8 @@
           <div class="col s12">
             Nome:
             <div class="input-field inline">
-              <input type="text" name="nome" [(ngModel)]="produto.name" maxlength="60" required>
+              <input type="text" name="nome" [(ngModel)]="prodName" maxlength="60" required>
+              <span *ngIf="!checkName()" class="display-error">Já existe um produto cadastrado com o mesmo nome</span>
             </div>
           </div>
         </div>
@@ -27,8 +28,9 @@
 
         <div class="row">
           <div class="col s12 center-align">
-            <button class="waves-effect waves-light btn green" type="submit" [disabled]="!produtoForm.form.valid"
-              (click)="save(produto)">{{txtBtnSubmit}}</button>
+            <button class="waves-effect waves-light btn" type="button" [routerLink]="['']">Voltar</button>
+            <button class="waves-effect waves-light btn green" type="submit"
+              [disabled]="!produtoForm.form.valid || !checkName()" (click)="save(produto)">{{txtBtnSubmit}}</button>
           </div>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../model/product.model';
 import { FeedbackService } from '../../../service/feedback/feedback.service';
@@ -13,6 +13,8 @@ import { ProductService } from '../../../service/product/product.service';
 export class CadastroComponent implements OnInit {
 
   private produto: Product;
+  private produtos: Product[] = [];
+  private prodName: string;
 
   private edit: boolean;
   private txtBtnSubmit = '';
@@ -26,7 +28,10 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.prodName = '';
+
     this.produto = new Product();
+    this.getProducts();
 
     this.welcome();
   }
@@ -39,6 +44,7 @@ export class CadastroComponent implements OnInit {
           this.txtBtnSubmit = 'editar';
           this.txtHeader = 'Edição';
           this.getProduct(params['id']);
+          this.prodName = this.produto.name;
         } else {
           this.edit = false;
           this.txtBtnSubmit = 'cadastrar';
@@ -55,17 +61,30 @@ export class CadastroComponent implements OnInit {
   }
 
   save(produto: Product): void {
+    this.produto.name = this.prodName;
 
     if (this.edit) {
       this.service.update(produto);
-      this.feedback.openSnackBar('Produto editado!');
+      this.feedback.openSuccessSnackBar('Produto editado!');
       this.router.navigate(['/']);
     } else {
       this.service.save(produto);
-      this.feedback.openSnackBar('Produto cadastrado!');
+      this.feedback.openSuccessSnackBar('Produto cadastrado!');
       this.router.navigate(['/']);
     }
+  }
 
+  getProducts() {
+    this.produtos = this.service.getAll();
+    console.log(this.produtos);
+  }
+
+  checkName(): boolean {
+    const product = this.produtos.find(prod => prod.name === this.prodName);
+    if (product && product.id !== this.produto.id) {
+      return false;
+    }
+    return true;
   }
 
 }
