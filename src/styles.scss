@@ -1,0 +1,35 @@
+body, html {
+    background-color: #dddddd;
+}
+
+section {
+    padding: 20px 70px;
+}
+
+.card {
+    padding: 15px;
+}
+
+.small {
+    font-size: 50%;
+}
+
+.space {
+    margin-top: 50px; 
+}
+
+.brand-logo {
+    padding: 8px !important;
+}
+
+.input-field.inline > input {
+    width: 600px !important;
+}
+
+.actions > button{
+    margin: 0 5px;
+}
+
+mat-select span {
+    color: #000000 !important;
+}
